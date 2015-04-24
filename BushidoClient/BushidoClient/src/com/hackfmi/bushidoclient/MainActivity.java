@@ -19,10 +19,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        Wifi.connect(MainActivity.this,"vlex","password");
         
         
-        Log.d("BUSHIDO","App created!");
- 
+        Log.d("BUSHIDO", new Throwable().getStackTrace()[0].getLineNumber() + "App created!");
     }
     
     @Override
