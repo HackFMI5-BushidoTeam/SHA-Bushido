@@ -5,6 +5,7 @@
 	Android API to control the WIFI AP 
 	http://stackoverflow.com/questions/27942298/which-android-classes-to-use-for-controlling-wifi-hotspot
 	http://stackoverflow.com/questions/6394599/android-turn-on-off-wifi-hotspot-programmatically
+	Connect 2 wifi: http://stackoverflow.com/questions/8818290/how-to-connect-to-a-specific-wifi-network-in-android-programmatically
 	
 	Android lock pattern (exported from the base libs)
 	http://androidcustomviews.com/android-lock-pattern/
