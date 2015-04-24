@@ -7,7 +7,11 @@ Client Android app + Server Android app + Raspberry Pi (for unlocking)
 
 ## Client 
 1. Wifi (to work with the server)
+// Can connect to specific server and can turn on
+
 2. RSA (for secure communication with the server)
+
+
 3. NFC (for initial communication 2 send the identification of the client)
 4. Pattern + PIN
 5. FaceRecognition (Qualcom, to send the face data to the server)

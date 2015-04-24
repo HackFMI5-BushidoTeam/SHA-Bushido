@@ -1,6 +1,12 @@
 package com.hackfmi.bushidoclient;
 
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,10 +25,25 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        Wifi.connect(MainActivity.this,"vlex","password");
+        //Wifi.connect(MainActivity.this,"vlex","password");
         
         
-        Log.d("BUSHIDO", new Throwable().getStackTrace()[0].getLineNumber() + "App created!");
+        RSA rsa = new RSA();
+        try {
+            
+            String s = rsa.Encrypt("Test");
+
+            System.out.println("RSA Encrypt : " + s);
+            System.out.println("RSA Decrypt : " + rsa.Decrypt(s));
+            
+        } catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException
+                | BadPaddingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        
+        Log.d("BUSHIDO", "Line: " + new Throwable().getStackTrace()[0].getLineNumber() + " | App created!");
     }
     
     @Override
