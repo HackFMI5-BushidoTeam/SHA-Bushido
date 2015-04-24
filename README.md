@@ -10,7 +10,7 @@ Client Android app + Server Android app + Raspberry Pi (for unlocking)
 // Can connect to specific server and can turn on
 
 2. RSA (for secure communication with the server)
-
+// We have class that can encrypt/decrypt
 
 3. NFC (for initial communication 2 send the identification of the client)
 4. Pattern + PIN
