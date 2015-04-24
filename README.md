@@ -15,7 +15,7 @@ Client Android app + Server Android app + Raspberry Pi (for unlocking)
 ## Server
 1. Wifi (to work with the cilent)
 2. RSA (secure connection with client)
-3. NFC (initial recieving of data)
+3. NFC (initial recieving of data, it could not be enabled at the programmatically)
 4. Logic workflow - get the data and do some thing with it.
 5. SSH to the Pi for unlocking
 
