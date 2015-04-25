@@ -16,6 +16,20 @@ Client Android app + Server Android app + Raspberry Pi (for unlocking)
 4. Pattern + PIN
 5. FaceRecognition (Qualcom, to send the face data to the server)
 
+#### Client Activities:
+
+1. Connect/Main (button to open NFS and connect with progress bar)
+2. Pin (activity with pin code)
+3. Face Recognition (activity with photo of you)
+4. Unlock (activity with buton to turn on/off the locker)
+
+#### Server Activities
+1. Main Activity
+1.1 On/Off Server
+1.2 On/Off NFC (20sec timeout)
+1.3 Textfield with log
+
+
 ## Server
 1. Wifi (to work with the cilent)
 2. RSA (secure connection with client)

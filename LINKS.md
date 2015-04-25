@@ -44,3 +44,6 @@
 	
 	
 	
+
+### MISC
+* OnChange field: http://stackoverflow.com/questions/20824634/android-on-text-change-listener
