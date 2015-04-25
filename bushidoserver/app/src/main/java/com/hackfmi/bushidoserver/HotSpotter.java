@@ -56,66 +56,6 @@ public class HotSpotter extends Thread {
     }
 
 
-//
-//        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);;
-//
-//        if (wifiManager.isWifiEnabled()) {
-//            wifiManager.setWifiEnabled(false);
-//        }
-//        Method[] wmMethods = wifiManager.getClass().getDeclaredMethods();
-//        boolean methodFound = false;
-//        for (Method method: wmMethods) {
-//            if (method.getName().equals("setWifiApEnabled")) {
-//                methodFound = true;
-//                WifiConfiguration netConfig = new WifiConfiguration();
-//                netConfig.SSID = ssid;
-//                netConfig.preSharedKey= pass;
-//                netConfig.hiddenSSID = true;
-//                netConfig.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
-//                netConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-//                netConfig.allowedProtocols.set(WifiConfiguration.Protocol.RSN); // For WPA2
-////                netConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-////              netConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_EAP);
-////                netConfig.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-//                netConfig.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-////                netConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-//                netConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-//                try {
-//                    boolean apstatus = (Boolean) method.invoke(wifiManager, netConfig, true);
-//
-//                    for (Method isWifiApEnabledmethod: wmMethods) {
-//                        if (isWifiApEnabledmethod.getName().equals("isWifiApEnabled")) {
-//                            while (!(Boolean) isWifiApEnabledmethod.invoke(wifiManager)) {};
-//                            for (Method method1: wmMethods) {
-//                                if (method1.getName().equals("getWifiApState")) {
-//                                    int apstate;
-//                                    apstate = (Integer) method1.invoke(wifiManager);
-//                                    Log.i(this.getClass().toString(), "Apstate ::: "+apstate);
-//                                }
-//                            }
-//                        }
-//                    }
-//                    if (apstatus) {
-//                        Log.d("Splash Activity", "Access Point created");
-//                    } else {
-//                        Log.d("Splash Activity", "Access Point creation failed");
-//                    }
-//
-//                } catch (IllegalArgumentException e) {
-//                    e.printStackTrace();
-//                } catch (IllegalAccessException e) {
-//                    e.printStackTrace();
-//                } catch (InvocationTargetException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//        if (!methodFound) {
-//            Log.d("Splash Activity",
-//                    "cannot configure an access point");
-//        }
-//    }
-
     /**
      * Switching On data
      */

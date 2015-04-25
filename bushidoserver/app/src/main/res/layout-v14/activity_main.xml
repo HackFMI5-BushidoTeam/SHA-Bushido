@@ -15,7 +15,9 @@
         android:layout_alignRight="@+id/titleLbl"
         android:layout_alignEnd="@+id/titleLbl"
         android:layout_marginRight="53dp"
-        android:layout_marginEnd="53dp" />
+        android:layout_marginEnd="53dp"
+        android:enabled="false"
+        android:onClick="pairer"/>
 
     <TextView
         android:layout_width="wrap_content"
