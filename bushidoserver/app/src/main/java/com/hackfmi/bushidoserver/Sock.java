@@ -30,8 +30,6 @@ public class Sock extends Thread implements Serializable {
     public void run() {
         try {
             ServerSocket servSock = new ServerSocket(12345, 50, InetAddress.getByName("192.168.43.1"));
-//            System.out.println("Local hsot ip is " + InetAddress.getLocalHost());
-//            System.out.println(keypair.publicKey);
             while (true) {
                 Socket sock = servSock.accept();
                 BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
@@ -50,14 +48,15 @@ public class Sock extends Thread implements Serializable {
                             break;
                     }
                     if (this.hwid_check && this.pin_check && this.bio_check) {
-                        System.out.println("BRavo na mom4etooo");
+                        System.out.println("Bravo na mom4etooo");
                         break;
                     }
                     if (this.hwid_check && this.pin_check && this.bio_check) break;
-
                 }
                 sock.close();
+                if (this.hwid_check && this.pin_check && this.bio_check) break;
             }
+            System.out.println("Eventualno bihme startirali ssh tuk... Eventualno... mnogo eventualno....");
         } catch (Exception e){
             e.printStackTrace();
         }
