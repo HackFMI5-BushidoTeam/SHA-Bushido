@@ -15,10 +15,12 @@ import java.security.PublicKey;
  */
 public class Beamer extends NfcBeamWriterActivity {
 
-    public Beamer(String ssid, String pass, String publicKey, RSA keypair) throws UnsupportedEncodingException {
+//    public Beamer(String ssid, String pass, String publicKey, RSA keypair) throws UnsupportedEncodingException {
+    public Beamer(String ssid, String pass) throws UnsupportedEncodingException {
         AndroidApplicationRecord aar = new AndroidApplicationRecord();
-        aar.setPackageName("com.hackfmi.bushidoclient");
-        String dataToBePassed = ssid+"&"+pass+"&"+publicKey;
+//        aar.setPackageName("com.hackfmi.bushidoclient");
+        aar.setPackageName("com.manuelmaly.hn");
+        String dataToBePassed = ssid+"&"+pass; //+"&"; //+publicKey;
         MimeRecord mimeRecord = new MimeRecord();
         mimeRecord.setMimeType("text/plain");
         mimeRecord.setData(dataToBePassed.getBytes("UTF-8"));

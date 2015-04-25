@@ -4,6 +4,7 @@ package com.hackfmi.bushidoserver;
  * Created by Vlex on 4/25/2015.
  */
 import java.security.InvalidKeyException;
+import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -14,6 +15,8 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.math.BigInteger;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 
 public class RSA {
@@ -92,8 +95,11 @@ public class RSA {
         return new BigInteger(b2).toString(36);
     }
 
-    public byte[] stringToBytes(String s) {
+    public static byte[] stringToBytes(String s) {
         byte[] b2 = new BigInteger(s, 36).toByteArray();
         return Arrays.copyOfRange(b2, 1, b2.length);
     }
+
+
+
 }
