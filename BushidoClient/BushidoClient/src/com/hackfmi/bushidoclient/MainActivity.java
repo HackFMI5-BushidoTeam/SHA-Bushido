@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-
-
 import com.hackfmi.bushidoclient.R;
 
 public class MainActivity extends Activity {
@@ -17,7 +15,8 @@ public class MainActivity extends Activity {
    
         // Wifi.connect(MainActivity.this,"tester","password12345678901234567890");
         
-        new Connection();
+        // Connection conn = new Connection();
+        // conn.start();
         
         //System.out.println(BushidoHelper.getPhoneID(MainActivity.this));
 
@@ -25,7 +24,11 @@ public class MainActivity extends Activity {
         // String s = rsa.Encrypt("Test");
         // System.out.println("RSA Encrypt : " + s);
         // System.out.println("RSA Decrypt : " + rsa.Decrypt(s));
-
+        
+        Intent intent = new Intent(this, LiveRecognition.class);
+        startActivity(intent);
+        
+        
         Log.d("BUSHIDO", "Line: " + new Throwable().getStackTrace()[0].getLineNumber() + " | App created!");
     }
 
