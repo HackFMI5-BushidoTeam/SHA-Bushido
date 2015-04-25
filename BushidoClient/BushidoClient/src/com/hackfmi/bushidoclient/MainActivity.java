@@ -1,12 +1,5 @@
 package com.hackfmi.bushidoclient;
 
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,8 +13,9 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
-        // Wifi.connect(MainActivity.this,"vlex","password");
+   
+        Wifi.connect(MainActivity.this,"tester","password12345678901234567890");
+        //System.out.println(BushidoHelper.getPhoneID(MainActivity.this));
 
         // RSA rsa = new RSA();
         // String s = rsa.Encrypt("Test");

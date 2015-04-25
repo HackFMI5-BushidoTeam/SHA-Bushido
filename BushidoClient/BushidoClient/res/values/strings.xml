@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">BushidoClient</string>
+    <string name="app_name">SHA-Bushido Client</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_pin">PinActivity</string>
+    <string name="pin">PIN CODE</string>
 
 </resources>
