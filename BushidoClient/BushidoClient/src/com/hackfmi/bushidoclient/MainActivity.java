@@ -70,7 +70,7 @@ public class MainActivity extends Activity {
                 textView1.setText("Connecting to server...");
 
                 // Connecting, if reply is true, continue to PinActivity
-                Connection conn = new Connection();
+                Connection2 conn = new Connection2();
                 conn.start();
                 
                 // Intent intent = new Intent(currentActivity, PinActivity.class);
