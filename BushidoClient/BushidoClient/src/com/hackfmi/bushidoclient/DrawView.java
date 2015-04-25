@@ -20,6 +20,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.SurfaceView;
 
 public class DrawView extends SurfaceView {
@@ -60,6 +61,11 @@ public class DrawView extends SurfaceView {
 						personName = entry.getKey();
 					}
 				}
+				
+				if (personName != null) {
+				    Log.d("CONN", "Person: " + personName);
+			    }
+				
 				Rect rect = mFaceArray[i].rect;
 				float pixelDensity = getResources().getDisplayMetrics().density;
 				int textSize = (int) (rect.width() / 25 * pixelDensity);
@@ -78,6 +84,7 @@ public class DrawView extends SurfaceView {
 					canvas.drawRect(backgroundRect, paintForTextBackground);
 					canvas.drawText(personName, rect.left, rect.bottom
 							+ (textSize), paintForText);
+					
 				}
 			}
 		} else {

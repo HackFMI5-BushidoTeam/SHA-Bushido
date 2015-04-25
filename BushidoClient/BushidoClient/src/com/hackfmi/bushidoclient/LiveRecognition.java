@@ -1,21 +1,11 @@
-/*
- * =========================================================================
- * Copyright (c) 2014 Qualcomm Technologies, Inc. All Rights Reserved.
- * Qualcomm Technologies Proprietary and Confidential.
- * =========================================================================
- * @file LiveRecognition.java
- */
-
 package com.hackfmi.bushidoclient;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import com.qualcomm.snapdragon.sdk.face.FaceData;
 import com.qualcomm.snapdragon.sdk.face.FacialProcessing;
 import com.qualcomm.snapdragon.sdk.face.FacialProcessing.FP_MODES;
 import com.qualcomm.snapdragon.sdk.face.FacialProcessing.PREVIEW_ROTATION_ANGLE;
-
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -23,6 +13,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
@@ -261,15 +252,21 @@ public class LiveRecognition extends Activity implements Camera.PreviewCallback 
 					// int surfaceHeight = mPreview.getHeight();
 					faceObj.normalizeCoordinates(0, 0);
 					preview.removeView(drawView); // Remove the previously created view to avoid unnecessary stacking of
-													// Views.
+
 					drawView = new DrawView(this, faceArray, true);
 					preview.addView(drawView);
 					
-					// return to previous activity
-					this.finish();
+					//Starting the previous Intent
+
+					 MainActivity.persona = "f6db3dc27640bd695c55ca540d1f7d90";
+					 Log.d("BUSHIDO", "Closing Live Recognition with person.");
+					 this.finish();
+					 
 				}
 			}
 		}
 	}
+	
+
 	
 }

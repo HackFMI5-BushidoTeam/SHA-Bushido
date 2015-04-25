@@ -18,6 +18,8 @@ public class MainActivity extends Activity {
     private int progressStatus = 0;
     private Handler handler = new Handler();
     private Activity currentActivity;
+    public static String persona = "";
+    private Connection conn;
     
     public void progressBar(){
         
@@ -55,35 +57,37 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         currentActivity = this;
-    
+        conn = new Connection(currentActivity);
+     
+        
         
         final Button button = (Button) findViewById(R.id.button1);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 progressBar();
-                button.setVisibility(View.GONE);
+                //button.setVisibility(View.GONE);
                 
                 TextView textView1 = (TextView) findViewById(R.id.textView1);
                 textView1.setVisibility(View.GONE);
                 
                 textView1 = (TextView) findViewById(R.id.textView2);                
                 textView1.setText("Connecting to server...");
-
-                // Connecting, if reply is true, continue to PinActivity
-                Connection2 conn = new Connection2();
-                conn.start();
                 
+                conn.start();
+                // conn.sent("ASDF");
+                //conn.sent("ASDFASDASD");
+               // conn.sent("TESTERO");
+                conn.close();
+
                 // Intent intent = new Intent(currentActivity, PinActivity.class);
                 // startActivity(intent);
-                
+
                 // From PinActivity, if reply is true, continue to LiveRecognition
-                
-                
-                
+
                 Log.d("BUSHIDO", "botona beshe natisnat!");
                 
-                // Intent intent = new Intent(this, LiveRecognition.class);
-                //startActivity(intent);                
+                // Intent intent = new Intent(currentActivity, LiveRecognition.class);
+                // startActivity(intent);                
                 
             }
         });        
@@ -102,17 +106,17 @@ public class MainActivity extends Activity {
         
         //Intent intent = new Intent(this, LiveRecognition.class);
         //startActivity(intent);
-        
-        
-        
+
         Log.d("BUSHIDO", "Line: " + new Throwable().getStackTrace()[0].getLineNumber() + " | App created!");
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        
         Log.d("BUSHIDO", "App resumed!");
 
     }
+ 
 
 }
