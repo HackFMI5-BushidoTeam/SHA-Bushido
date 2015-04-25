@@ -119,7 +119,7 @@ public class LiveRecognition extends Activity implements Camera.PreviewCallback 
             boolean isSupported = true;
             if (isSupported) {
                 Log.d("TAG", "Feature Facial Recognition is supported");
-                faceObj = (FacialProcessing) FacialProcessing.getInstance();
+                faceObj = FacialProcessing.getInstance();
                 loadAlbum(); // De-serialize a previously stored album.
                 if (faceObj != null) {
                     faceObj.setRecognitionConfidence(confidence_value);
@@ -135,6 +135,7 @@ public class LiveRecognition extends Activity implements Camera.PreviewCallback 
                         .setCancelable(false)
                         .setNegativeButton("OK",
                                 new DialogInterface.OnClickListener() {
+                                    @Override
                                     public void onClick(DialogInterface dialog,
                                             int id) {
                                         // super.finish();
@@ -183,16 +184,19 @@ public class LiveRecognition extends Activity implements Camera.PreviewCallback 
 		return true;
 	}
 	
-	protected void onPause() {
+	@Override
+    protected void onPause() {
 		super.onPause();
 		stopCamera();
 	}
 	
-	protected void onDestroy() {
+	@Override
+    protected void onDestroy() {
 		super.onDestroy();
 	}
 	
-	protected void onResume() {
+	@Override
+    protected void onResume() {
 		super.onResume();
 		if (cameraObj != null) {
 			stopCamera();
