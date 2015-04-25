@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.*;
 import java.io.*;
 import java.net.*;
@@ -24,10 +25,18 @@ public class Main extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        String ssid = "tester";
+        String pass = "password";
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        try {
+            new Beamer(ssid, pass);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    public void starter(View v){
+    public void starter(View v) throws UnsupportedEncodingException {
         ToggleButton toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
         toggleButton.setEnabled(true);
         Random rand = new Random();
@@ -39,7 +48,7 @@ public class Main extends ActionBarActivity {
         hot.start();
         Sock shit = new Sock();
         shit.start();
-        new Reader();
+
 
     }
 
@@ -83,4 +92,6 @@ public class Main extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
