@@ -1,5 +1,6 @@
 package com.hackfmi.bushidoserver;
 
+import android.content.Context;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -7,146 +8,75 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+import java.io.*;
+import java.net.*;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import com.google.common.base.Preconditions;
-import android.content.Context;
-import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiManager;
-import android.util.Log;
+//import android.net.wifi.WifiManager;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import android.app.Activity;
-import android.content.Context;
-import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiManager;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.util.Random;
 
 
 public class Main extends ActionBarActivity {
+    public int value = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ToggleButton toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        toggleButton.setEnabled(false);
-        createWifiAccessPoint();
 
     }
 
     public void starter(View v){
-        final ProgressBar prog = (ProgressBar) findViewById(R.id.prog);
-        prog.setProgress(0);
-        prog.setMax(15);
-        new ApManager();
+        ToggleButton toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
+        toggleButton.setEnabled(true);
         Random rand = new Random();
+//        String ssid = new BushidoHelper().md5(Integer.toString(rand.nextInt()));
+//        String pass = new BushidoHelper().md5(Integer.toString(rand.nextInt()));
         String ssid = "tester";
         String pass = "password";
-//        final TextView label = (TextView) findViewById(R.id.title);
-//        new CountDownTimer(15000, 100) {
-//            public void onTick(long millisUntilFinished) {
-//                label.setText(Long.toString(millisUntilFinished / 100));
-//                prog.setProgress((int)millisUntilFinished / 100);
-//            }
-//
-//        public void onFinish() {
-////            stopNFC();
-//        }
-//        }.start();
+        HotSpotter hot = new HotSpotter(ssid, pass, Main.this);
+        hot.start();
+        Sock shit = new Sock();
+        shit.start();
+        new Reader();
+
     }
 
-    private void createWifiAccessPoint() {
-        WifiManager wifiManager = (WifiManager)getBaseContext().getSystemService(Context.WIFI_SERVICE);
-        if(wifiManager.isWifiEnabled())
-        {
-            wifiManager.setWifiEnabled(false);
-        }
-        Method[] wmMethods = wifiManager.getClass().getDeclaredMethods();
-        boolean methodFound=false;
-        for(Method method: wmMethods){
-            if(method.getName().equals("setWifiApEnabled")){
-                methodFound=true;
-                WifiConfiguration netConfig = new WifiConfiguration();
-                netConfig.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
-                netConfig.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
-                netConfig.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-//                netConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-                netConfig.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-                netConfig.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-                netConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-                netConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-                try {
-                    boolean apstatus=(Boolean) method.invoke(wifiManager, netConfig,true);
-                    //statusView.setText("Creating a Wi-Fi Network \""+netConfig.SSID+"\"");
-                    for (Method isWifiApEnabledmethod: wmMethods)
-                    {
-                        if(isWifiApEnabledmethod.getName().equals("isWifiApEnabled")){
-                            while(!(Boolean)isWifiApEnabledmethod.invoke(wifiManager)){
-                            };
-                            for(Method method1: wmMethods){
-                                if(method1.getName().equals("getWifiApState")){
-                                    int apstate;
-                                    apstate=(Integer)method1.invoke(wifiManager);
-                                    //                    netConfig=(WifiConfiguration)method1.invoke(wifi);
-                                    //statusView.append("\nSSID:"+netConfig.SSID+"\nPassword:"+netConfig.preSharedKey+"\n");
-                                }
-                            }
-                        }
-                    }
-                    if(apstatus)
-                    {
-                        System.out.println("SUCCESSdddd");
-                        //statusView.append("\nAccess Point Created!");
-                        //finish();
-                        //Intent searchSensorsIntent = new Intent(this,SearchSensors.class);
-                        //startActivity(searchSensorsIntent);
-                    }else
-                    {
-                        System.out.println("FAILED");
-                        //statusView.append("\nAccess Point Creation failed!");
-                    }
-                } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
+    public void pairer(View v, String ssid, String pass, Context context){
+        final ToggleButton toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
+        final ProgressBar prog = (ProgressBar) findViewById(R.id.prog);
+        prog.setProgress(0);
+        prog.setMax(150);
+        prog.setProgress(150 - value);
+
+        synchronized ((Object)value){
+
+            new CountDownTimer(15000, 100) {
+                public void onTick(long millisUntilFinished) {
+                    value += 1;
+                    prog.setProgress(150-value);
                 }
-            }
-        }
-        if(!methodFound){
-            //statusView.setText("Your phone's API does not contain setWifiApEnabled method to configure an access point");
+                public void onFinish() {
+                    prog.setProgress(0);
+                    toggleButton.setEnabled(true);
+                    toggleButton.setChecked(false);
+                }
+            }.start();
+            value = 0;
         }
     }
-
-
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }

@@ -1,14 +1,17 @@
 package com.hackfmi.bushidoserver;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import java.nio.charset.Charset;
 import java.util.Locale;
+import java.net.*;
 
 /**
  * Created by Vlex on 4/25/2015.
@@ -18,8 +21,10 @@ public class BeamData extends Activity {
     private TextView mTextView;
     private NdefMessage mNdefMessage;
 
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD_MR1)
     @Override
     public void onCreate(Bundle savedState) {
+
         super.onCreate(savedState);
 
         setContentView(R.layout.activity_main);
@@ -40,6 +45,7 @@ public class BeamData extends Activity {
                         createNewTextRecord("Second sample NDEF text record", Locale.ENGLISH, true) });
     }
 
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     public static NdefRecord createNewTextRecord(String text, Locale locale, boolean encodeInUtf8) {
         byte[] langBytes = locale.getLanguage().getBytes(Charset.forName("US-ASCII"));
 
@@ -57,6 +63,7 @@ public class BeamData extends Activity {
         return new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, new byte[0], data);
     }
 
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD_MR1)
     @Override
     public void onResume() {
         super.onResume();
@@ -65,6 +72,7 @@ public class BeamData extends Activity {
             mNfcAdapter.enableForegroundNdefPush(this, mNdefMessage);
     }
 
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD_MR1)
     @Override
     public void onPause() {
         super.onPause();
