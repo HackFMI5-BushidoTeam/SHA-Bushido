@@ -52,6 +52,11 @@ public class Main extends ActionBarActivity {
 
     }
 
+    public void ssh_init(View v){
+        ssh_session ssh = new ssh_session();
+        ssh.start();
+    }
+
     public void pairer(View v, String ssid, String pass, Context context){
         final ToggleButton toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
         final ProgressBar prog = (ProgressBar) findViewById(R.id.prog);

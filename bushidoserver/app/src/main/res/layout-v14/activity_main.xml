@@ -82,4 +82,13 @@
         android:layout_below="@+id/toggleButton"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SSH"
+        android:id="@+id/btnSSH"
+        android:layout_below="@+id/starter"
+        android:layout_centerHorizontal="true"
+        android:onClick="ssh_init" />
+
 </RelativeLayout>
