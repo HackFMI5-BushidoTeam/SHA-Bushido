@@ -5,10 +5,8 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NfcAdapter;
-import android.nfc.tech.NfcA;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 
 /**
  * Created by Vlex on 4/25/2015.

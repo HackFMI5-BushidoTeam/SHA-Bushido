@@ -32,6 +32,7 @@ public class DrawView extends SurfaceView {
 	private boolean _inFrame; // Boolean to see if there is any faces in the frame
 	private HashMap<String, String> hash;
 	private LiveRecognition faceRecog;
+	public String person;
 	
 	public DrawView(Context context, FaceData[] faceArray, boolean inFrame) {
 		super(context);
@@ -50,17 +51,19 @@ public class DrawView extends SurfaceView {
 		{
 			for (int i = 0; i < mFaceArray.length; i++) {
 				
-				String selectedPersonId = Integer.toString(mFaceArray[i]
-						.getPersonId());
+				String selectedPersonId = Integer.toString(mFaceArray[i].getPersonId());
 				String personName = null;
 				Iterator<HashMap.Entry<String, String>> iter = hash.entrySet()
 						.iterator();
 				while (iter.hasNext()) {
+				    
 					HashMap.Entry<String, String> entry = iter.next();
 					if (entry.getValue().equals(selectedPersonId)) {
 						personName = entry.getKey();
 					}
+					
 				}
+				
 				
 				if (personName != null) {
 				    Log.d("CONN", "Person: " + personName);
@@ -84,8 +87,12 @@ public class DrawView extends SurfaceView {
 					canvas.drawRect(backgroundRect, paintForTextBackground);
 					canvas.drawText(personName, rect.left, rect.bottom
 							+ (textSize), paintForText);
+					person = personName;
+
+					
 					
 				}
+				
 			}
 		} else {
 			canvas.drawColor(0, Mode.CLEAR);

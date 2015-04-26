@@ -13,7 +13,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
@@ -93,6 +92,44 @@ public class LiveRecognition extends Activity implements Camera.PreviewCallback 
         editor.commit();
     }    
     
+    public void initme(){
+                if (!activityStartedOnce) // Check to make sure FacialProcessing object
+                    // is not created multiple times.
+        {
+        activityStartedOnce = true;
+        // Check if Facial Recognition feature is supported in the device
+        // boolean isSupported = FacialProcessing.isFeatureSupported(FEATURE_LIST.FEATURE_FACIAL_RECOGNITION);
+        boolean isSupported = true;
+        if (isSupported) {
+        Log.d("TAG", "Feature Facial Recognition is supported");
+        
+        faceObj = (FacialProcessing) FacialProcessing.getInstance();
+        loadAlbum(); // De-serialize a previously stored album.
+        if (faceObj != null) {
+        faceObj.setRecognitionConfidence(confidence_value);
+        faceObj.setProcessingMode(FP_MODES.FP_MODE_STILL);
+        }
+        } else // If Facial recognition feature is not supported then
+        // display an alert box.
+        {
+        Log.e("TAG", "Feature Facial Recognition is NOT supported");
+        new AlertDialog.Builder(this)
+        .setMessage(
+                "Your device does NOT support Qualcomm's Facial Recognition feature. ")
+        .setCancelable(false)
+        .setNegativeButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,
+                            int id) {
+                        // super.finish();
+                    }
+                }).show();
+        }
+        }   
+    }
+    
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -100,41 +137,7 @@ public class LiveRecognition extends Activity implements Camera.PreviewCallback 
 
         hash = retrieveHash(getApplicationContext()); // Retrieve the previously
                                                         // saved Hash Map.
-        
-        if (!activityStartedOnce) // Check to make sure FacialProcessing object
-                                    // is not created multiple times.
-        {
-            activityStartedOnce = true;
-            // Check if Facial Recognition feature is supported in the device
-            // boolean isSupported = FacialProcessing.isFeatureSupported(FEATURE_LIST.FEATURE_FACIAL_RECOGNITION);
-            boolean isSupported = true;
-            if (isSupported) {
-                Log.d("TAG", "Feature Facial Recognition is supported");
-                faceObj = (FacialProcessing) FacialProcessing.getInstance();
-                loadAlbum(); // De-serialize a previously stored album.
-                if (faceObj != null) {
-                    faceObj.setRecognitionConfidence(confidence_value);
-                    faceObj.setProcessingMode(FP_MODES.FP_MODE_STILL);
-                }
-            } else // If Facial recognition feature is not supported then
-                    // display an alert box.
-            {
-                Log.e("TAG", "Feature Facial Recognition is NOT supported");
-                new AlertDialog.Builder(this)
-                        .setMessage(
-                                "Your device does NOT support Qualcomm's Facial Recognition feature. ")
-                        .setCancelable(false)
-                        .setNegativeButton("OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,
-                                            int id) {
-                                        // super.finish();
-                                    }
-                                }).show();
-            }
-        }		
-		
-		
+        initme();	
 		// faceObj = FacialRecognitionActivity.faceObj;
 		switchCameraButton = (ImageView) findViewById(R.id.camera_facing);
 		vibrate = (Vibrator) LiveRecognition.this
@@ -174,21 +177,27 @@ public class LiveRecognition extends Activity implements Camera.PreviewCallback 
 		return true;
 	}
 	
-	protected void onPause() {
+	@Override
+    protected void onPause() {
 		super.onPause();
 		stopCamera();
 	}
 	
-	protected void onDestroy() {
+	@Override
+    protected void onDestroy() {
 		super.onDestroy();
 	}
 	
-	protected void onResume() {
+	@Override
+    protected void onResume() {
 		super.onResume();
 		if (cameraObj != null) {
 			stopCamera();
 		}
+		initme();
 		startCamera();
+		
+
 	}
 	
 	/*
@@ -226,6 +235,11 @@ public class LiveRecognition extends Activity implements Camera.PreviewCallback 
 	@Override
 	public void onPreviewFrame(byte[] data, Camera camera) {
 		boolean result = false;
+		
+		if(faceObj == null){
+		    initme();
+		}
+		
 		faceObj.setProcessingMode(FP_MODES.FP_MODE_VIDEO);
 		if (cameraFacingFront) {
 			result = faceObj.setFrame(data, frameWidth, frameHeight, true,
@@ -248,6 +262,7 @@ public class LiveRecognition extends Activity implements Camera.PreviewCallback 
 				if (faceArray == null) {
 					Log.e("TAG", "Face array is null");
 				} else {
+				    loadAlbum();
 					// int surfaceWidth = mPreview.getWidth();
 					// int surfaceHeight = mPreview.getHeight();
 					faceObj.normalizeCoordinates(0, 0);
@@ -256,12 +271,19 @@ public class LiveRecognition extends Activity implements Camera.PreviewCallback 
 					drawView = new DrawView(this, faceArray, true);
 					preview.addView(drawView);
 					
-					//Starting the previous Intent
+					
+					if(faceArray[0].getRecognitionConfidence()>=60){
+					    
+					    Log.d("TAG", "Face Detected ID: MIGLEN");
+					    finish();
+					}
+					
+					Log.d("TAG", "Face Detected ID: " + faceArray[0].getRecognitionConfidence());
+					
+
 
 					 MainActivity.persona = "f6db3dc27640bd695c55ca540d1f7d90";
-					 Log.d("BUSHIDO", "Closing Live Recognition with person.");
-					 this.finish();
-					 
+
 				}
 			}
 		}
